@@ -27,7 +27,17 @@ def cadastro(usuario,senha):
 
 
 def login(usuario,senha):
-    pass    
+    senha = senha.encode("utf-8")
+    senha = md5(senha).hexdigest()
+    dataBase = db.connect("Banco.db")    
+    cursor = dataBase.cursor()
+    cursor.execute(f"SElECT senha FROM players WHERE '{senha}' == senha and '{usuario}' == usuario")
+    row = cursor.fetchone()
+    if row == None:
+        print('Usuario ou senha incorretos')
+    else:
+        print('usuario escontrado')
+
 
 def janela_login():
     layout = [
@@ -81,6 +91,8 @@ while True:
             janela2['senha_cadastro'].update('')
             janela2['senha_confirm'].update('')
     if window == janela1 and events == 'Logar':
-        pass
+        usuario = values["usuario_login"]
+        senha = values["senha_login"]
+        login(usuario,senha)
 janela1.close()
 janela2.close()
