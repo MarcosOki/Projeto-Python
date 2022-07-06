@@ -8,6 +8,7 @@ import PySimpleGUI as sg
 from hashlib import md5
 
 
+
 def cadastro(usuario,senha):
     dataBase = db.connect('Banco.db')
     cursor = dataBase.cursor()
