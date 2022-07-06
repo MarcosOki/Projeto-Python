@@ -7,7 +7,6 @@ import random
 import PySimpleGUI as sg
 from hashlib import md5
 
-id = {'id':0}
 
 def cadastro(usuario,senha):
     dataBase = db.connect('Banco.db')
@@ -15,14 +14,12 @@ def cadastro(usuario,senha):
     cursor.execute(f"SELECT * FROM players WHERE usuario = '{usuario}'")
     row = cursor.fetchone()
     if row == None:
-        global id
         janela2.hide()
         janela1.un_hide()
         senha = senha.encode('utf-8')
         senha = md5(senha).hexdigest()
-        cursor.execute(f"INSERT INTO players VALUES ({id},'{usuario}','{senha}',0,0)")
+        cursor.execute(f"INSERT INTO players VALUES ('{usuario}','{senha}',0,0)")
         dataBase.commit()
-        id += 1
         janela1['texto2'].update("Cadastro realizado com sucesso, agora basta logar")
     else:
         janela2['texto1'].update('Este usuario ja existe')
